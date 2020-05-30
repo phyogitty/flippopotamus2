@@ -5,10 +5,12 @@ import 'package:flippopotamus/objects/level_option.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flippopotamus/objects/theme_option.dart';
+import 'package:flippopotamus/objects/time_play.dart';
 
 class UserData extends ChangeNotifier {
   // DATA
 
+  PlayTime playedDuration;
   ThemeOption _selectedTheme = kThemes[0];
   LevelOption _selectedLevel = kLevels[0];
 
@@ -44,6 +46,10 @@ class UserData extends ChangeNotifier {
 
   void setTheme(ThemeOption selectedOption) {
     _selectedTheme = selectedOption;
+  }
+
+  void setPlayedDuration(PlayTime duration) {
+    playedDuration = duration;
   }
 
   void setEndGameFunc(Function end) {
@@ -144,6 +150,10 @@ class UserData extends ChangeNotifier {
   }
 
   // GETTERS
+
+  PlayTime get gameDuration {
+    return playedDuration;
+  }
 
   ThemeOption get userTheme {
     return _selectedTheme;

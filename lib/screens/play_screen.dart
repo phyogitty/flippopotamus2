@@ -1,12 +1,11 @@
 import 'package:flippopotamus/components/grid_of_cards.dart';
+import 'package:flippopotamus/constants.dart';
 import 'package:flippopotamus/screens/summary_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flippopotamus/models/user_data.dart';
 import 'package:flippopotamus/objects/time_play.dart';
-import 'package:flip_card/flip_card.dart';
 import 'dart:async';
-import 'dart:math';
 
 class PlayScreen extends StatefulWidget {
   static const String id = 'play_screen';
@@ -17,6 +16,7 @@ class PlayScreen extends StatefulWidget {
 
 class _PlayScreenState extends State<PlayScreen>
     with SingleTickerProviderStateMixin {
+  Function setGameDuration;
   bool disappear = false;
   BuildContext buildContext;
   List<String> flips = [];
@@ -38,22 +38,9 @@ class _PlayScreenState extends State<PlayScreen>
     });
   }
 
-//  AnimationController controller;
-//  Animation animation;
-//  @override
-//  void initState() {
-//    super.initState();
-//    controller =
-//        AnimationController(duration: Duration(seconds: 1), vsync: this);
-//    animation = CurvedAnimation(parent: controller, curve: Curves.linear);
-//    controller.forward();
-//    controller.addListener(() {
-//      setState(() {});
-//    });
-//  }
   void endGame() {
     finished = true;
-
+    setGameDuration(PlayTime(timeVal: time));
     Timer(Duration(seconds: 2), () {
       Navigator.pushNamed(context, SummaryScreen.id);
     });
@@ -67,11 +54,13 @@ class _PlayScreenState extends State<PlayScreen>
 
   @override
   Widget build(BuildContext context) {
+    setGameDuration = Provider.of<UserData>(context).setPlayedDuration;
     Provider.of<UserData>(context).setStartGameTimer(startGameTimer);
     buildContext = context;
     Provider.of<UserData>(context).setEndGameFunc(endGame);
 
     return Scaffold(
+      backgroundColor: primaryVariant2,
       body: SafeArea(
         child: Container(
           child: Center(
@@ -81,8 +70,12 @@ class _PlayScreenState extends State<PlayScreen>
                   GestureDetector(
                     child: Container(
                       height: Provider.of<UserData>(context).row * 110.0,
-                      color: Colors.yellow,
+//                      color: Colors.yellow,
                       child: CardsGrid(
+                        frontColor: secondaryColor,
+                        backColor:
+                            secondaryVariant, // black 12 or 26 both look good
+
                         isGameCard: true,
                         column: Provider.of<UserData>(context).column,
                         cardHolders:
@@ -90,12 +83,44 @@ class _PlayScreenState extends State<PlayScreen>
                       ),
                     ),
                   ),
-                  Container(
-                      color: Colors.pink,
-                      child: Text(
+                  Column(
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            'Flip',
+                            style: TextStyle(
+                                color: primaryColor,
+                                fontFamily: 'Quantico',
+                                fontSize: 25),
+                          ),
+                          Text(
+                            'popo',
+                            style: TextStyle(
+                                color: thirdColor,
+                                fontFamily: 'Quantico',
+                                fontSize: 25),
+                          ),
+                          Text(
+                            'tamus',
+                            style: TextStyle(
+                                color: secondaryColor,
+                                fontFamily: 'Quantico',
+                                fontSize: 25),
+                          ),
+                        ],
+                      ),
+                      Container(
+                          child: Text(
                         PlayTime(timeVal: time).getStringFormat(),
-                        style: TextStyle(fontSize: 50),
+                        style: TextStyle(
+                            color: thirdColor,
+                            fontFamily: 'Quantico',
+                            fontSize: 50),
                       )),
+                    ],
+                  ),
 
                   // 250 for 3 rows, 6 elements
                   Container(
@@ -105,6 +130,8 @@ class _PlayScreenState extends State<PlayScreen>
                         : 4 * 75.0, // works for 2 rows or 4 rows
                     child: CardsGrid(
                       isGameCard: false,
+                      frontColor: primaryColor,
+                      backColor: primaryVariant,
                       column: Provider.of<UserData>(context).row % 2 == 1
                           ? Provider.of<UserData>(context).row
                           : Provider.of<UserData>(context).column,

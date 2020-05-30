@@ -25,7 +25,7 @@ class _ThemeScreenState extends State<ThemeScreen> {
             selectedTheme = theme;
           });
         },
-        colour: selectedTheme == theme ? Colors.pink.shade200 : Colors.white,
+        colour: selectedTheme == theme ? secondaryColor : Colors.white,
         leading: Text(theme.getLabelIcon(), style: TextStyle(fontSize: 50)),
       ));
     }
@@ -37,7 +37,7 @@ class _ThemeScreenState extends State<ThemeScreen> {
     return Scaffold(
       body: Container(
         padding: EdgeInsets.only(top: 100),
-        color: Colors.white,
+        color: primaryVariant2,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -48,7 +48,8 @@ class _ThemeScreenState extends State<ThemeScreen> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 40,
-                    color: Colors.pink.shade200,
+                    fontFamily: 'Quantico',
+                    color: thirdVariant,
                     fontWeight: FontWeight.w900),
               ),
               SizedBox(

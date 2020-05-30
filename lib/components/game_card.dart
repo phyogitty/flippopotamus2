@@ -1,3 +1,5 @@
+import 'package:flippopotamus/constants.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:provider/provider.dart';
@@ -6,18 +8,27 @@ import 'package:flippopotamus/models/user_data.dart';
 class ReusableGameCard extends StatefulWidget {
   String element;
   bool isGameCard;
-  ReusableGameCard({this.element, this.isGameCard});
+  Color frontColor;
+  Color backColor;
+  ReusableGameCard(
+      {this.element, this.isGameCard, this.frontColor, this.backColor});
 
   @override
   _ReusableGameCardState createState() => _ReusableGameCardState(
-      element: this.element, isGameCard: this.isGameCard);
+      element: this.element,
+      isGameCard: this.isGameCard,
+      frontColor: this.frontColor,
+      backColor: this.backColor);
 }
 
 class _ReusableGameCardState extends State<ReusableGameCard>
     with SingleTickerProviderStateMixin {
   String element = '';
   bool isGameCard;
-  _ReusableGameCardState({this.element, this.isGameCard});
+  Color frontColor;
+  Color backColor;
+  _ReusableGameCardState(
+      {this.element, this.isGameCard, this.frontColor, this.backColor});
 
   AnimationController controller;
   Animation animation;
@@ -91,7 +102,10 @@ class _ReusableGameCardState extends State<ReusableGameCard>
           ? Transform.scale(
               scale: animation.value,
               child: Container(
-                color: Colors.black,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: backColor,
+                ),
                 alignment: Alignment.center,
 //                height: 50,
 //                width: 50,
@@ -108,7 +122,10 @@ class _ReusableGameCardState extends State<ReusableGameCard>
                   ? Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: Container(
-                        color: Colors.black,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: backColor,
+                        ),
                         alignment: Alignment.center,
 //                          height: 50,
 //                          width: 50,
@@ -118,10 +135,13 @@ class _ReusableGameCardState extends State<ReusableGameCard>
                   : Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: frontColor,
+                        ),
                         alignment: Alignment.center,
 //                        height: 50,
 //                        width: 50,
-                        color: Colors.black,
                       ),
                     )),
     );

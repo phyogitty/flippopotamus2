@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flippopotamus/constants.dart';
 
 class ReusableThemeCard extends StatelessWidget {
   String description;
@@ -26,7 +27,11 @@ class ReusableThemeCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 leading,
-                Text(description, style: TextStyle(fontSize: 35))
+                Text(description,
+                    style: TextStyle(
+                        color: thirdColor,
+                        fontSize: 35,
+                        fontFamily: 'Quantico'))
               ],
             )),
       ),

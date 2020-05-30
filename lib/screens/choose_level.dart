@@ -25,7 +25,7 @@ class _LevelScreenState extends State<LevelScreen> {
             selectedLevel = level;
           });
         },
-        colour: selectedLevel == level ? Colors.pink.shade200 : Colors.white,
+        colour: selectedLevel == level ? primaryColor : Colors.white,
         leading: level.getIcon(),
       ));
     }
@@ -37,7 +37,7 @@ class _LevelScreenState extends State<LevelScreen> {
     return Scaffold(
       body: Container(
         padding: EdgeInsets.only(top: 100),
-        color: Colors.white,
+        color: secondaryVariant2,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -48,7 +48,8 @@ class _LevelScreenState extends State<LevelScreen> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 40,
-                    color: Colors.pink.shade200,
+                    fontFamily: 'Quantico',
+                    color: thirdVariant,
                     fontWeight: FontWeight.w900),
               ),
               SizedBox(
@@ -62,17 +63,6 @@ class _LevelScreenState extends State<LevelScreen> {
                 ),
               ),
             ],
-
-//          Container(
-//              margin: EdgeInsets.symmetric(horizontal: 13, vertical: 7),
-//              height: 80,
-//              color: Colors.grey,
-//            ),
-//            Container(
-//              margin: EdgeInsets.symmetric(horizontal: 13, vertical: 7),
-//              height: 80,
-//              color: Colors.grey,
-//            ),
           ),
         ),
       ),

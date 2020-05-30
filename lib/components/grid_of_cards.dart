@@ -6,7 +6,14 @@ class CardsGrid extends StatelessWidget {
   UnmodifiableListView<String> cardHolders;
   int column;
   bool isGameCard;
-  CardsGrid({this.cardHolders, this.column, this.isGameCard});
+  Color frontColor;
+  Color backColor;
+  CardsGrid(
+      {this.cardHolders,
+      this.column,
+      this.isGameCard,
+      this.frontColor,
+      this.backColor});
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +23,8 @@ class CardsGrid extends StatelessWidget {
         return ReusableGameCard(
           element: cardHolders[index],
           isGameCard: isGameCard,
+          frontColor: frontColor,
+          backColor: backColor,
         );
       }),
     );
