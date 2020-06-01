@@ -71,6 +71,7 @@ class _ReusableGameCardState extends State<ReusableGameCard>
   }
 
   void onFlipSolved() {
+    // for Game cards
     setState(() {
       solved = true;
       controller.reverse(from: 1);
@@ -80,7 +81,9 @@ class _ReusableGameCardState extends State<ReusableGameCard>
   @override
   Widget build(BuildContext context) {
     if (!isGameCard) {
-      Provider.of<UserData>(context).setOnPress(element, onFlipTap, () {
+      // inform the UserData once the widget is built for non-game card
+      // on the play screen, if it's not a game card, set TWO function
+      Provider.of<UserData>(context).setRevealCard(element, () {
         setState(() {
           solved = false;
           controller.reverse(from: 1);
@@ -90,6 +93,7 @@ class _ReusableGameCardState extends State<ReusableGameCard>
     return GestureDetector(
       onTap: isGameCard
           ? () {
+              // we want to inform the UserData as the user is playing
               Provider.of<UserData>(context, listen: false).startGame();
               setState(() {
                 onFlipTap();
@@ -100,6 +104,7 @@ class _ReusableGameCardState extends State<ReusableGameCard>
           : () {}, // do nothing is not game card
       child: solved
           ? Transform.scale(
+              // scale down/shrink down when two cards matched
               scale: animation.value,
               child: Container(
                 decoration: BoxDecoration(
@@ -107,12 +112,11 @@ class _ReusableGameCardState extends State<ReusableGameCard>
                   color: backColor,
                 ),
                 alignment: Alignment.center,
-//                height: 50,
-//                width: 50,
                 child: Text(element, style: TextStyle(fontSize: 50)),
               ),
             )
           : Transform(
+              // FIRST, it's used as long as the game card is not solved; SECOND, to reveal the non-game card when solved
               transform: Matrix4.identity()
 //                          ..setEntry(3, 2, 0.002)
                 ..rotateY(pi * animation.value),
@@ -127,8 +131,6 @@ class _ReusableGameCardState extends State<ReusableGameCard>
                           color: backColor,
                         ),
                         alignment: Alignment.center,
-//                          height: 50,
-//                          width: 50,
                         child: Text(element, style: TextStyle(fontSize: 50)),
                       ),
                     )

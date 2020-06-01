@@ -11,13 +11,12 @@ class UserData extends ChangeNotifier {
   // DATA
 
   PlayTime playedDuration;
-  ThemeOption _selectedTheme = kThemes[0];
-  LevelOption _selectedLevel = kLevels[0];
+  ThemeOption _selectedTheme;
+  LevelOption _selectedLevel;
 
-  List<String> shuffledElements = [];
-  List<String> playedElements = [];
-  Map<String, Function> revealOnPressAfterSolved = {};
-  Map<String, Function> setSolvedAfterSolved = {};
+  List<String> shuffledElements = []; // contains all the elements to display
+  List<String> playedElements = []; // only unique elements to play
+  Map<String, Function> revealAfterSolved = {};
   int flipCount = 0;
   String _firstFlipped = '';
   String _secondFlipped = '';
@@ -39,9 +38,9 @@ class UserData extends ChangeNotifier {
 
   // SETTERS
 
-  void setOnPress(String element, Function onPress, Function onSolved) {
-    revealOnPressAfterSolved[element] = onPress;
-    setSolvedAfterSolved[element] = onSolved;
+  void setRevealCard(String element, Function onSolved) {
+//    revealOnPressAfterSolved[element] = onPress;
+    revealAfterSolved[element] = onSolved;
   }
 
   void setTheme(ThemeOption selectedOption) {
@@ -97,10 +96,10 @@ class UserData extends ChangeNotifier {
         _firstFlipped = '';
         _secondFlipped = '';
       } else if (_secondFlipped == _currentFlipped) {
-        _previousOnSolved();
-        _currentOnSolved();
-        revealOnPressAfterSolved[_currentFlipped]();
-        setSolvedAfterSolved[_currentFlipped]();
+        _previousOnSolved(); // one of the card shrinks to the center
+        _currentOnSolved(); // another one shrinks to the center
+//        revealOnPressAfterSolved[_currentFlipped]();
+        revealAfterSolved[_currentFlipped]();
         solvedCount++;
         if (solvedCount == (row * 2)) {
           gameEnd = true;
@@ -127,8 +126,8 @@ class UserData extends ChangeNotifier {
   void resetAll() {
     shuffledElements = [];
     playedElements = [];
-    revealOnPressAfterSolved = {};
-    setSolvedAfterSolved = {};
+//    revealOnPressAfterSolved = {};
+    revealAfterSolved = {};
     flipCount = 0;
 
     _firstFlipped = '';
