@@ -1,5 +1,7 @@
-# Flippopotamus
+## Flippopotamus
+# A Flipping Memory Game
 
-A simple flipping memory game, built with Flutter.
+A simple mobile app game, build with Flutter, using Flutter animation
 
-
+# Complete Walkthrough
+<img src='walkthrough.gif'></img><br>
