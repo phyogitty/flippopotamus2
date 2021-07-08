@@ -36,7 +36,6 @@ class _SummaryScreenState extends State<SummaryScreen>
         AnimationController(duration: Duration(seconds: 1), vsync: this);
     textController = AnimationController(
         duration: Duration(milliseconds: 1500), vsync: this);
-//    animation = CurvedAnimation(parent: controller, curve: Curves.linear);
     matrixAnimation =
         CurvedAnimation(parent: matrixController, curve: Curves.linear);
     textAnimation =

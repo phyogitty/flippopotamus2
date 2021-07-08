@@ -1,7 +1,7 @@
 import 'package:flippopotamus/objects/theme_option.dart';
 import 'package:flippopotamus/screens/choose_level.dart';
 import 'package:flutter/material.dart';
-import 'package:flippopotamus/components/reusable_card_theme.dart';
+import 'package:flippopotamus/components/reusable_option_card.dart';
 import 'package:flippopotamus/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:flippopotamus/models/user_data.dart';
@@ -15,14 +15,16 @@ class ThemeScreen extends StatefulWidget {
 
 class _ThemeScreenState extends State<ThemeScreen> {
   ThemeOption selectedTheme;
+  bool chooseDone = false;
   List<Widget> getOptions() {
-    List<ReusableThemeCard> allThemeCards = [];
+    List<ReusableOptionCard> allThemeCards = [];
     for (ThemeOption theme in kThemes) {
-      allThemeCards.add(ReusableThemeCard(
+      allThemeCards.add(ReusableOptionCard(
         description: theme.getDescription(),
         onPress: () {
           setState(() {
             selectedTheme = theme;
+            chooseDone = true;
           });
         },
         colour: selectedTheme == theme ? secondaryColor : Colors.white,
@@ -36,7 +38,7 @@ class _ThemeScreenState extends State<ThemeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.only(top: 100),
+        padding: EdgeInsets.only(top: 70),
         color: primaryVariant2,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -52,9 +54,6 @@ class _ThemeScreenState extends State<ThemeScreen> {
                     color: thirdVariant,
                     fontWeight: FontWeight.w900),
               ),
-              SizedBox(
-                height: 20,
-              ),
               Expanded(
                 child: Container(
                   child: ListView(
@@ -62,15 +61,42 @@ class _ThemeScreenState extends State<ThemeScreen> {
                   ),
                 ),
               ),
+              chooseDone
+                  ? FlatButton(
+                      onPressed: () {
+                        Provider.of<UserData>(context, listen: false)
+                            .setTheme(selectedTheme);
+                        Navigator.pushNamed(context, LevelScreen.id);
+                      },
+                      child: Container(
+                        height: 80,
+                        alignment: Alignment.center,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              'Next > ',
+                              style: TextStyle(
+                                  fontSize: 30,
+                                  color: thirdVariant,
+                                  fontFamily: 'Quantico',
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            Text(
+                              'Choose Level',
+                              style: TextStyle(
+                                  fontSize: 30,
+                                  color: secondaryColor,
+                                  fontFamily: 'Quantico'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  : Container(height: 80)
             ],
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Provider.of<UserData>(context, listen: false).setTheme(selectedTheme);
-          Navigator.pushNamed(context, LevelScreen.id);
-        },
       ),
     );
   }

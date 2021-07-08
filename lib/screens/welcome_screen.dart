@@ -122,13 +122,14 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                           AlignmentDirectional.topStart // or Alignment.topLeft
                       ),
                 ),
-//                Text('Flippopotamus',
-//                    style: TextStyle(fontFamily: 'Quantico', fontSize: 30)),
                 SizedBox(height: 50),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    ReusableCard(label: 'Flip', colour: secondaryVariant),
+                    ReusableCard(
+                        label: 'Flip',
+                        colour: secondaryVariant,
+                        textColor: primaryColor),
                     Transform(
                         transform: Matrix4.identity()
 //                          ..setEntry(3, 2, 0.002)
@@ -137,7 +138,10 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                         child: animation.value * pi <=
                                 1.5640821149756443 // change the display at pi/2 (90 degree)
                             ? ReusableCard(label: '🐼', colour: primaryColor)
-                            : ReusableCard(label: 'oq', colour: thirdColor)),
+                            : ReusableCard(
+                                label: 'oq',
+                                colour: thirdColor,
+                                textColor: primaryVariant2)),
                   ],
                 ),
                 Row(
@@ -145,15 +149,19 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   children: <Widget>[
                     Transform(
                         transform: Matrix4.identity()
-                          ..rotateY(pi * animation.value),
+                          ..rotateY(pi * animation.value), // rotate 180 degree
                         alignment: FractionalOffset.center,
                         child: animation.value * pi <=
-                                1.5640821149756443 // change the display at pi/2 (90 degree)
-                            ? ReusableCard(label: 'po', colour: secondaryColor)
+                                1.5640821149756443 // change the display at pi/2 (90 degree) to naturally rotate
+                            ? ReusableCard(
+                                label: 'po',
+                                colour: secondaryColor,
+                                textColor: thirdColor)
                             : ReusableCard(label: '🐼', colour: thirdVariant)),
-                    ReusableCard(label: 'tamus', colour: primaryVariant),
-
-//                    ReusableStaticCard(label: 'tamus'),
+                    ReusableCard(
+                        label: 'tamus',
+                        colour: primaryVariant,
+                        textColor: secondaryColor),
                   ],
                 ),
                 SizedBox(height: 80),
@@ -164,13 +172,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                     Navigator.pushNamed(context, ThemeScreen.id);
                   },
                 ),
-
-//                Text(
-//                  "Good Job",
-//                  style: TextStyle(
-//                      fontSize: 40,
-//                      color: Color.fromRGBO(0, 0, 0, textAnimation.value)),
-//                )
               ],
             ),
           ),

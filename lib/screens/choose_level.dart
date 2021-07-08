@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flippopotamus/constants.dart';
 import 'package:flippopotamus/objects/level_option.dart';
-import 'package:flippopotamus/components/reusable_card_theme.dart';
+import 'package:flippopotamus/components/reusable_option_card.dart';
 import 'package:flippopotamus/screens/play_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:flippopotamus/models/user_data.dart';
@@ -15,13 +15,15 @@ class LevelScreen extends StatefulWidget {
 
 class _LevelScreenState extends State<LevelScreen> {
   LevelOption selectedLevel;
+  bool chooseDone = false;
   List<Widget> getOptions() {
-    List<ReusableThemeCard> allLevelCards = [];
+    List<ReusableOptionCard> allLevelCards = [];
     for (LevelOption level in kLevels) {
-      allLevelCards.add(ReusableThemeCard(
+      allLevelCards.add(ReusableOptionCard(
         description: level.getDescription(),
         onPress: () {
           setState(() {
+            chooseDone = true;
             selectedLevel = level;
           });
         },
@@ -62,15 +64,42 @@ class _LevelScreenState extends State<LevelScreen> {
                   ),
                 ),
               ),
+              chooseDone
+                  ? FlatButton(
+                      onPressed: () {
+                        Provider.of<UserData>(context, listen: false)
+                            .setLevel(selectedLevel);
+                        Navigator.pushNamed(context, PlayScreen.id);
+                      },
+                      child: Container(
+                        height: 80,
+                        alignment: Alignment.center,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              'Next > ',
+                              style: TextStyle(
+                                  fontSize: 30,
+                                  color: thirdVariant,
+                                  fontFamily: 'Quantico',
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            Text(
+                              'START GAME',
+                              style: TextStyle(
+                                  fontSize: 30,
+                                  color: secondaryColor,
+                                  fontFamily: 'Quantico'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  : Container(height: 80)
             ],
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Provider.of<UserData>(context, listen: false).setLevel(selectedLevel);
-          Navigator.pushNamed(context, PlayScreen.id);
-        },
       ),
     );
   }
